@@ -126,7 +126,11 @@ public class Login extends javax.swing.JFrame {
     private void btnSignInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSignInActionPerformed
         
         
-        if(txtUserName.getText().length()<1)
+        if(txtUserName.getText().length()<1 && txtPassword.getText().length()<1)
+        {
+            JOptionPane.showMessageDialog(null, "Fill up the fields");
+        }
+        else if(txtUserName.getText().length()<1)
         {
             JOptionPane.showMessageDialog(null, "Enter Username");
         }
@@ -205,12 +209,11 @@ public class Login extends javax.swing.JFrame {
         try
         {
             PreparedStatement ps = Database.con.prepareStatement
-        ("SELECT * FROM user WHERE Username = '"+UserName+"' AND Password = '"+Password+"'");
+        ("SELECT * FROM login WHERE Username = '"+UserName+"' AND Password = '"+Password+"'");
             ResultSet rs = ps.executeQuery();
             
             if(rs.next())
             {
-                       
                 Menu menu = new Menu();
                 menu.setVisible(true);
                 menu.setLocationRelativeTo(null);

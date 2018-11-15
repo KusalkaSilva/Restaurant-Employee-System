@@ -20,6 +20,7 @@ public class Database {
        {
           Class.forName("com.mysql.jdbc.Driver");
           con = DriverManager.getConnection(url,user,password);
+
        }
        
        catch(ClassNotFoundException | SQLException ex){
@@ -35,6 +36,7 @@ public class Database {
        try
        {
            con.close(); 
+           
        }
        
        catch(SQLException ex)

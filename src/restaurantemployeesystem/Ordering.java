@@ -333,11 +333,11 @@ public class Ordering extends javax.swing.JFrame {
 
         BlackStrap.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/black screen.jpg"))); // NOI18N
         BlackStrap.setText("jLabel2");
-        getContentPane().add(BlackStrap, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 920, 50));
+        getContentPane().add(BlackStrap, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 930, 50));
 
         GreyBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/brown.jpg"))); // NOI18N
         GreyBackground.setText("jLabel1");
-        getContentPane().add(GreyBackground, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 920, 640));
+        getContentPane().add(GreyBackground, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 930, 640));
     }// </editor-fold>//GEN-END:initComponents
 
     private void cmboFCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmboFCategoryActionPerformed
@@ -380,7 +380,10 @@ public class Ordering extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        // TODO add your handling code here:
+        Menu menu = new Menu();
+        menu.setVisible(true);
+        menu.setLocationRelativeTo(null);
+        this.dispose();
     }//GEN-LAST:event_btnBackActionPerformed
 
     /**

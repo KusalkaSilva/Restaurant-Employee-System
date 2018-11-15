@@ -8,8 +8,7 @@ public class RestaurantEmployeeSystem {
         HomePage home = new  HomePage();
         home.setVisible(true);
         home.setLocationRelativeTo(null);
-        
-        
+            
         
     }
     

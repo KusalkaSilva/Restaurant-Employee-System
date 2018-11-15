@@ -6,6 +6,10 @@
 package restaurantemployeesystem;
 
 import java.awt.Cursor;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -119,18 +123,39 @@ public class AdminValidate extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtUserNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUserNameActionPerformed
-        // TODO add your handling code here:
+      
     }//GEN-LAST:event_txtUserNameActionPerformed
 
     private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
-        AdminMenu admenu = new AdminMenu();
-        admenu.setVisible(true);
-        admenu.setLocationRelativeTo(null);
-        this.dispose();
+       if(txtUserName.getText().length()<1 && txtPassword.getText().length()<1)
+        {
+            JOptionPane.showMessageDialog(null, "Fill up the fields");
+        }
+        else if(txtUserName.getText().length()<1)
+        {
+            JOptionPane.showMessageDialog(null, "Enter Username");
+        }
+        else if(txtPassword.getText().length()<1)
+        {
+            JOptionPane.showMessageDialog(null, "Enter Password");
+        }
+        else
+        {
+            Database db = new Database();
+            db.getDatabaseConnection();
+            
+            adminvalidate(txtUserName.getText(), txtPassword.getText());
+            
+            
+            db.closeDatabaseConnection();
+        }
     }//GEN-LAST:event_btnOKActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        // TODO add your handling code here:
+        SignUp signup = new SignUp();
+        signup.setVisible(true);
+        signup.setLocationRelativeTo(null);
+        this.dispose();
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
@@ -187,4 +212,65 @@ public class AdminValidate extends javax.swing.JFrame {
     private javax.swing.JTextField txtUserName;
     private javax.swing.JLabel user_icon;
     // End of variables declaration//GEN-END:variables
+ 
+    
+    
+    private void adminvalidate(String UserName, String Password) {
+        try
+        {
+            PreparedStatement ps = Database.con.prepareStatement
+        ("SELECT UserType = 'Administrator' FROM login WHERE Username = '"+UserName+"' AND Password = '"+Password+"'");
+            
+            ResultSet rs = ps.executeQuery();
+            
+            if(rs.next())
+            {
+                signup(txtUserName.getText(), txtPassword.getText());
+            }
+            
+            else
+            {
+                JOptionPane.showMessageDialog(null, "Invalid Login");
+            }
+        }
+        
+        catch(SQLException ex)
+        {
+            JOptionPane.showMessageDialog(null, "ERROR");
+                    
+        }
+        
+        
+    }
+
+    private void signup(String Username, String Password) {
+        
+        try
+        {
+            
+            PreparedStatement ps1 = Database.con.prepareStatement("INSERT INTO login(UserName, Password, UserType) VALUES(?,?,?)");
+            ps1.setString(1,SignUp.txtsUserName.getText());
+            ps1.setString(2,SignUp.txtsPassword.getText());
+            ps1.setString(3,"Administrator");
+            
+            
+            ps1.executeUpdate();
+            
+            JOptionPane.showMessageDialog(null, "Sign Up Successful");
+            
+            AdminMenu admenu = new AdminMenu();
+            admenu.setVisible(true);
+            admenu.setLocationRelativeTo(null);
+            this.dispose();
+           
+        }
+        
+        catch(SQLException ex)
+        {
+            JOptionPane.showMessageDialog(null, "ERROR");
+                    
+        }
+        
+        
+    }
 }

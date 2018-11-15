@@ -1,27 +1,21 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package restaurantemployeesystem;
 
 import java.awt.Color;
 import java.awt.Cursor;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
-/**
- *
- * @author User
- */
 public class SignUp extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Login
-     */
     public SignUp() {
         initComponents();
-        
-        txtUserName.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
-        txtPassword.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
+      
+       
+        txtsUserName.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
+        txtsPassword.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
         txtCPassword.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
         comboUserType.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         
@@ -53,13 +47,13 @@ public class SignUp extends javax.swing.JFrame {
         lblSignUp = new javax.swing.JLabel();
         lblPassword = new javax.swing.JLabel();
         btnExit = new javax.swing.JButton();
-        txtUserName = new javax.swing.JTextField();
+        txtsUserName = new javax.swing.JTextField();
         btnSignUp = new javax.swing.JButton();
         lblUserType = new javax.swing.JLabel();
         lblCPassword = new javax.swing.JLabel();
         comboUserType = new javax.swing.JComboBox<>();
         txtCPassword = new javax.swing.JPasswordField();
-        txtPassword = new javax.swing.JPasswordField();
+        txtsPassword = new javax.swing.JPasswordField();
         btnBack = new javax.swing.JButton();
         lblUserName = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -91,13 +85,13 @@ public class SignUp extends javax.swing.JFrame {
         });
         getContentPane().add(btnExit, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 450, -1, 30));
 
-        txtUserName.setFont(new java.awt.Font("Bernard MT Condensed", 0, 18)); // NOI18N
-        txtUserName.addActionListener(new java.awt.event.ActionListener() {
+        txtsUserName.setFont(new java.awt.Font("Bernard MT Condensed", 0, 18)); // NOI18N
+        txtsUserName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtUserNameActionPerformed(evt);
+                txtsUserNameActionPerformed(evt);
             }
         });
-        getContentPane().add(txtUserName, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 200, 190, 30));
+        getContentPane().add(txtsUserName, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 200, 190, 30));
 
         btnSignUp.setBackground(new java.awt.Color(0, 0, 0));
         btnSignUp.setFont(new java.awt.Font("Bernard MT Condensed", 0, 18)); // NOI18N
@@ -127,8 +121,8 @@ public class SignUp extends javax.swing.JFrame {
         txtCPassword.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         getContentPane().add(txtCPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 320, 190, 30));
 
-        txtPassword.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        getContentPane().add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 260, 190, 30));
+        txtsPassword.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        getContentPane().add(txtsPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 260, 190, 30));
 
         btnBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/back.png"))); // NOI18N
         btnBack.addActionListener(new java.awt.event.ActionListener() {
@@ -149,23 +143,48 @@ public class SignUp extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtUserNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUserNameActionPerformed
+    private void txtsUserNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtsUserNameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtUserNameActionPerformed
+    }//GEN-LAST:event_txtsUserNameActionPerformed
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
         System.exit(0);
     }//GEN-LAST:event_btnExitActionPerformed
 
     private void btnSignUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSignUpActionPerformed
-        AdminValidate admin = new AdminValidate();
-        admin.setVisible(true);
-        admin.setLocationRelativeTo(null);
-        this.dispose();
+        
+        if (txtsUserName.getText().length()<1 || txtsPassword.getText().length()<1 || txtCPassword.getText().length()<1){
+            JOptionPane.showMessageDialog(null,"Fill up all the fields");
+        }
+        
+        else if(txtsPassword.getText() == null ? txtCPassword.getText() != null : !txtsPassword.getText().equals(txtCPassword.getText())){
+                JOptionPane.showMessageDialog(null, "Password doesn't match");
+            }
+        
+        else if ("Administrator".equals(comboUserType.getSelectedItem().toString()))
+        {
+            
+            AdminValidate advalidate = new AdminValidate();
+            advalidate.setVisible(true);
+            advalidate.setLocationRelativeTo(null);
+            this.dispose();
+            
+        }
+        else{
+            
+            Database db = new Database();
+            db.getDatabaseConnection();
+            
+            signup(txtsUserName.getText(), txtsPassword.getText(), comboUserType.getSelectedItem().toString());
+
+        }
     }//GEN-LAST:event_btnSignUpActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        // TODO add your handling code here:
+        Login login = new Login();
+        login.setVisible(true);
+        login.setLocationRelativeTo(null);
+        this.dispose();
     }//GEN-LAST:event_btnBackActionPerformed
 
     /**
@@ -209,15 +228,42 @@ public class SignUp extends javax.swing.JFrame {
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnSignUp;
     private javax.swing.JComboBox<String> comboUserType;
-    private javax.swing.JLabel jLabel1;
+    public javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblCPassword;
     private javax.swing.JLabel lblPassword;
     private javax.swing.JLabel lblSignUp;
     private javax.swing.JLabel lblUserName;
     private javax.swing.JLabel lblUserType;
     private javax.swing.JPasswordField txtCPassword;
-    private javax.swing.JPasswordField txtPassword;
-    private javax.swing.JTextField txtUserName;
+    public static javax.swing.JPasswordField txtsPassword;
+    public static javax.swing.JTextField txtsUserName;
     private javax.swing.JLabel user_icon;
     // End of variables declaration//GEN-END:variables
+
+    private void signup(String UserName, String Password, String UserType) 
+    {
+        try{
+            
+     
+            
+            PreparedStatement ps = Database.con.prepareStatement("INSERT INTO login(UserName, Password, UserType) VALUES(?,?,?)");
+            ps.setString(1,txtsUserName.getText());
+            ps.setString(2,txtsPassword.getText());
+            ps.setString(3,comboUserType.getSelectedItem().toString());
+            
+            ps.executeUpdate();
+            
+            JOptionPane.showMessageDialog(null, "Sign Up Successful !!");
+            
+            
+            Menu menu = new Menu();
+            menu.setVisible(true);
+            menu.setLocationRelativeTo(null);
+            this.dispose();
+        }
+        
+        catch(SQLException ex){
+            JOptionPane.showMessageDialog(null, "ERROR");
+        }
+    }
 }

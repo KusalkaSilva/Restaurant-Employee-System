@@ -286,7 +286,10 @@ public class Billing extends javax.swing.JFrame {
     }//GEN-LAST:event_txtTotActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        // TODO add your handling code here:
+        Ordering order = new Ordering();
+        order.setVisible(true);
+        order.setLocationRelativeTo(null);
+        this.dispose();
     }//GEN-LAST:event_btnBackActionPerformed
 
     /**

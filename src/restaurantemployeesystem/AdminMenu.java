@@ -37,6 +37,7 @@ public class AdminMenu extends javax.swing.JFrame {
         btnOrderD = new javax.swing.JButton();
         btnEmpReg = new javax.swing.JButton();
         btnCashierP = new javax.swing.JButton();
+        btnExit = new javax.swing.JButton();
         btnBilD = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
@@ -65,6 +66,15 @@ public class AdminMenu extends javax.swing.JFrame {
         });
         getContentPane().add(btnCashierP, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 370, 210, 50));
 
+        btnExit.setFont(new java.awt.Font("Bernard MT Condensed", 0, 14)); // NOI18N
+        btnExit.setText("Exit");
+        btnExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExitActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnExit, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 500, 60, 30));
+
         btnBilD.setFont(new java.awt.Font("Bernard MT Condensed", 0, 24)); // NOI18N
         btnBilD.setText("Bill Details");
         getContentPane().add(btnBilD, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 290, 210, 50));
@@ -89,6 +99,10 @@ public class AdminMenu extends javax.swing.JFrame {
         menu.setLocationRelativeTo(null);
         this.dispose();
     }//GEN-LAST:event_btnCashierPActionPerformed
+
+    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_btnExitActionPerformed
 
     /**
      * @param args the command line arguments
@@ -129,6 +143,7 @@ public class AdminMenu extends javax.swing.JFrame {
     private javax.swing.JButton btnBilD;
     private javax.swing.JButton btnCashierP;
     private javax.swing.JButton btnEmpReg;
+    private javax.swing.JButton btnExit;
     private javax.swing.JButton btnOrderD;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
