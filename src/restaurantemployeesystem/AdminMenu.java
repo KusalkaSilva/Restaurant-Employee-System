@@ -44,10 +44,17 @@ public class AdminMenu extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        btnOrderD.setBackground(new java.awt.Color(255, 255, 255));
         btnOrderD.setFont(new java.awt.Font("Bernard MT Condensed", 0, 24)); // NOI18N
         btnOrderD.setText("Order Details");
+        btnOrderD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOrderDActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnOrderD, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 210, 210, 50));
 
+        btnEmpReg.setBackground(new java.awt.Color(255, 255, 255));
         btnEmpReg.setFont(new java.awt.Font("Bernard MT Condensed", 0, 24)); // NOI18N
         btnEmpReg.setText("Employee Registry");
         btnEmpReg.addActionListener(new java.awt.event.ActionListener() {
@@ -57,6 +64,7 @@ public class AdminMenu extends javax.swing.JFrame {
         });
         getContentPane().add(btnEmpReg, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 130, -1, 50));
 
+        btnCashierP.setBackground(new java.awt.Color(255, 255, 255));
         btnCashierP.setFont(new java.awt.Font("Bernard MT Condensed", 0, 24)); // NOI18N
         btnCashierP.setText("Cashier Process");
         btnCashierP.addActionListener(new java.awt.event.ActionListener() {
@@ -66,6 +74,7 @@ public class AdminMenu extends javax.swing.JFrame {
         });
         getContentPane().add(btnCashierP, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 370, 210, 50));
 
+        btnExit.setBackground(new java.awt.Color(255, 255, 255));
         btnExit.setFont(new java.awt.Font("Bernard MT Condensed", 0, 14)); // NOI18N
         btnExit.setText("Exit");
         btnExit.addActionListener(new java.awt.event.ActionListener() {
@@ -75,6 +84,7 @@ public class AdminMenu extends javax.swing.JFrame {
         });
         getContentPane().add(btnExit, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 500, 60, 30));
 
+        btnBilD.setBackground(new java.awt.Color(255, 255, 255));
         btnBilD.setFont(new java.awt.Font("Bernard MT Condensed", 0, 24)); // NOI18N
         btnBilD.setText("Bill Details");
         getContentPane().add(btnBilD, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 290, 210, 50));
@@ -103,6 +113,10 @@ public class AdminMenu extends javax.swing.JFrame {
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
         System.exit(0);
     }//GEN-LAST:event_btnExitActionPerformed
+
+    private void btnOrderDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrderDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnOrderDActionPerformed
 
     /**
      * @param args the command line arguments

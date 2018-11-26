@@ -5,9 +5,18 @@ public class RestaurantEmployeeSystem {
 
     public static void main(String[] args) {
         
-        HomePage home = new  HomePage();
+        /*HomePage home = new  HomePage();
         home.setVisible(true);
         home.setLocationRelativeTo(null);
+        */
+        
+        EmployeeRegistry emo = new EmployeeRegistry();
+        emo.setVisible(true);
+                
+     
+         
+        
+        
             
         
     }

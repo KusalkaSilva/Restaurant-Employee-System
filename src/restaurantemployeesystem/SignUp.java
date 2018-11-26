@@ -115,7 +115,7 @@ public class SignUp extends javax.swing.JFrame {
         getContentPane().add(lblCPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 320, -1, -1));
 
         comboUserType.setFont(new java.awt.Font("Bernard MT Condensed", 0, 18)); // NOI18N
-        comboUserType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administrator", "Employee" }));
+        comboUserType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Employee", "Administrator" }));
         getContentPane().add(comboUserType, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 380, 190, 30));
 
         txtCPassword.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -161,21 +161,17 @@ public class SignUp extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Password doesn't match");
             }
         
-        else if ("Administrator".equals(comboUserType.getSelectedItem().toString()))
-        {
+        else{
             
             AdminValidate advalidate = new AdminValidate();
             advalidate.setVisible(true);
             advalidate.setLocationRelativeTo(null);
             this.dispose();
             
-        }
-        else{
-            
             Database db = new Database();
             db.getDatabaseConnection();
             
-            signup(txtsUserName.getText(), txtsPassword.getText(), comboUserType.getSelectedItem().toString());
+            
 
         }
     }//GEN-LAST:event_btnSignUpActionPerformed
@@ -227,7 +223,7 @@ public class SignUp extends javax.swing.JFrame {
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnSignUp;
-    private javax.swing.JComboBox<String> comboUserType;
+    public static javax.swing.JComboBox<String> comboUserType;
     public javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblCPassword;
     private javax.swing.JLabel lblPassword;
@@ -240,30 +236,5 @@ public class SignUp extends javax.swing.JFrame {
     private javax.swing.JLabel user_icon;
     // End of variables declaration//GEN-END:variables
 
-    private void signup(String UserName, String Password, String UserType) 
-    {
-        try{
-            
-     
-            
-            PreparedStatement ps = Database.con.prepareStatement("INSERT INTO login(UserName, Password, UserType) VALUES(?,?,?)");
-            ps.setString(1,txtsUserName.getText());
-            ps.setString(2,txtsPassword.getText());
-            ps.setString(3,comboUserType.getSelectedItem().toString());
-            
-            ps.executeUpdate();
-            
-            JOptionPane.showMessageDialog(null, "Sign Up Successful !!");
-            
-            
-            Menu menu = new Menu();
-            menu.setVisible(true);
-            menu.setLocationRelativeTo(null);
-            this.dispose();
-        }
-        
-        catch(SQLException ex){
-            JOptionPane.showMessageDialog(null, "ERROR");
-        }
-    }
+    
 }

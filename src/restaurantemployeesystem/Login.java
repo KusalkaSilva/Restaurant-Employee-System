@@ -209,7 +209,7 @@ public class Login extends javax.swing.JFrame {
         try
         {
             PreparedStatement ps = Database.con.prepareStatement
-        ("SELECT * FROM login WHERE Username = '"+UserName+"' AND Password = '"+Password+"'");
+        ("SELECT * FROM login WHERE Username = '"+UserName+"' AND Password = '"+Password+"' AND UserType = 'Employee'");
             ResultSet rs = ps.executeQuery();
             
             if(rs.next())
@@ -220,10 +220,7 @@ public class Login extends javax.swing.JFrame {
                 this.dispose();
             }
             
-            else
-            {
-                JOptionPane.showMessageDialog(null, "Invalid Login");
-            }
+           
         }
         
         catch(SQLException ex)
@@ -231,6 +228,56 @@ public class Login extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "ERROR");
                     
         }
+        
+        try
+        {
+            PreparedStatement ps = Database.con.prepareStatement
+        ("SELECT * FROM login WHERE Username = '"+UserName+"' AND Password = '"+Password+"' AND UserType = 'Administrator'");
+            ResultSet rs = ps.executeQuery();
+            
+            if(rs.next())
+            {
+                AdminMenu admenu = new AdminMenu();
+                admenu.setVisible(true);
+                admenu.setLocationRelativeTo(null);
+                this.dispose();
+            }
+            
+        }
+        
+         catch(SQLException ex)
+        {
+            JOptionPane.showMessageDialog(null, "ERROR");
+                    
+        }
+        
+        try
+        {
+            PreparedStatement ps = Database.con.prepareStatement
+        ("SELECT * FROM login WHERE Username = '"+UserName+"' AND Password = '"+Password+"'");
+            ResultSet rs = ps.executeQuery();
+            
+            if(rs.next())
+            {
+                
+            }
+            
+            else
+            {
+                JOptionPane.showMessageDialog(null, "Invalid Login");
+            }
+            
+        }
+        
+         catch(SQLException ex)
+        {
+            JOptionPane.showMessageDialog(null, "ERROR");
+                    
+        }
+        
+        
+        
+        
         
     }
 }

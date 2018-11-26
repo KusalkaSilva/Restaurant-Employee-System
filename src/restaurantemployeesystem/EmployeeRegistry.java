@@ -6,6 +6,12 @@
 package restaurantemployeesystem;
 
 import java.awt.Cursor;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import static restaurantemployeesystem.Database.con;
 
 /**
  *
@@ -38,7 +44,36 @@ public class EmployeeRegistry extends javax.swing.JFrame {
         btDelete.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         btSearch.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         btUpdate.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        
+        Table();
     }
+    
+    public void Table(){
+        
+        try{
+            
+            Database db = new Database();
+            db.getDatabaseConnection();
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM employee_registry");
+            ResultSet rs = ps.executeQuery();
+            DefaultTableModel dtm = (DefaultTableModel)tblDetails.getModel();
+            dtm.setRowCount(0);
+            
+            while(rs.next())
+            {
+                Object o[] = {rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8)};
+                dtm.addRow(o);
+            }
+        }
+        
+        catch(Exception e)
+        {
+            JOptionPane.showMessageDialog(this, e);
+        }
+    }
+    
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -72,7 +107,7 @@ public class EmployeeRegistry extends javax.swing.JFrame {
         lblFirstName = new javax.swing.JLabel();
         lblEmployeeCode = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tblODetails = new javax.swing.JTable();
+        tblDetails = new javax.swing.JTable();
         EmployeeRegistration = new javax.swing.JLabel();
         btnBack = new javax.swing.JButton();
         BlackStrap = new javax.swing.JLabel();
@@ -81,18 +116,19 @@ public class EmployeeRegistry extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Employee Registry");
         setIconImages(null);
-        setMinimumSize(new java.awt.Dimension(915, 640));
+        setMaximumSize(new java.awt.Dimension(970, 690));
+        setMinimumSize(new java.awt.Dimension(970, 690));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btDelete.setBackground(new java.awt.Color(204, 204, 204));
         btDelete.setFont(new java.awt.Font("Bernard MT Condensed", 0, 18)); // NOI18N
         btDelete.setText("DELETE");
-        getContentPane().add(btDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 300, -1, -1));
+        getContentPane().add(btDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 310, -1, -1));
 
         btUpdate.setBackground(new java.awt.Color(204, 204, 204));
         btUpdate.setFont(new java.awt.Font("Bernard MT Condensed", 0, 18)); // NOI18N
         btUpdate.setText("UPDATE");
-        getContentPane().add(btUpdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 300, -1, -1));
+        getContentPane().add(btUpdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 310, -1, -1));
 
         btAdd.setBackground(new java.awt.Color(204, 204, 204));
         btAdd.setFont(new java.awt.Font("Bernard MT Condensed", 0, 18)); // NOI18N
@@ -102,133 +138,115 @@ public class EmployeeRegistry extends javax.swing.JFrame {
                 btAddActionPerformed(evt);
             }
         });
-        getContentPane().add(btAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 300, -1, -1));
+        getContentPane().add(btAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 310, -1, -1));
 
-        txtSearch.setFont(new java.awt.Font("Bernard MT Condensed", 0, 14)); // NOI18N
-        getContentPane().add(txtSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 220, 260, -1));
+        txtSearch.setFont(new java.awt.Font("Bernard MT Condensed", 0, 16)); // NOI18N
+        getContentPane().add(txtSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 270, 260, -1));
 
-        comboSearch.setFont(new java.awt.Font("Bernard MT Condensed", 0, 14)); // NOI18N
-        comboSearch.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Employee Code", "First Name", "Last Name", "Address", "Mobile No", "Monthly Salary", "Date Hired", "Status" }));
-        getContentPane().add(comboSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 220, 130, -1));
+        comboSearch.setFont(new java.awt.Font("Bernard MT Condensed", 0, 16)); // NOI18N
+        comboSearch.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Employee ID", "First Name", "Last Name", "Address", "Mobile No", "Monthly Salary", "Date Hired", "Status" }));
+        getContentPane().add(comboSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 270, 130, -1));
 
         btSearch.setBackground(new java.awt.Color(204, 204, 204));
-        btSearch.setFont(new java.awt.Font("Bernard MT Condensed", 0, 14)); // NOI18N
+        btSearch.setFont(new java.awt.Font("Bernard MT Condensed", 0, 16)); // NOI18N
         btSearch.setText("SEARCH");
         btSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btSearchActionPerformed(evt);
             }
         });
-        getContentPane().add(btSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, -1, -1));
+        getContentPane().add(btSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 270, -1, -1));
 
-        txtEmpCode.setFont(new java.awt.Font("Bernard MT Condensed", 0, 14)); // NOI18N
-        getContentPane().add(txtEmpCode, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 70, 120, -1));
+        txtEmpCode.setFont(new java.awt.Font("Bernard MT Condensed", 0, 16)); // NOI18N
+        getContentPane().add(txtEmpCode, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 80, 120, -1));
 
-        txtFName.setFont(new java.awt.Font("Bernard MT Condensed", 0, 14)); // NOI18N
-        getContentPane().add(txtFName, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 100, 260, -1));
+        txtFName.setFont(new java.awt.Font("Bernard MT Condensed", 0, 16)); // NOI18N
+        getContentPane().add(txtFName, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 120, 260, -1));
 
-        txtLName.setFont(new java.awt.Font("Bernard MT Condensed", 0, 14)); // NOI18N
-        getContentPane().add(txtLName, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 130, 260, -1));
+        txtLName.setFont(new java.awt.Font("Bernard MT Condensed", 0, 16)); // NOI18N
+        getContentPane().add(txtLName, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 160, 260, -1));
 
-        txtAddress.setFont(new java.awt.Font("Bernard MT Condensed", 0, 14)); // NOI18N
-        getContentPane().add(txtAddress, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 160, 260, -1));
+        txtAddress.setFont(new java.awt.Font("Bernard MT Condensed", 0, 16)); // NOI18N
+        getContentPane().add(txtAddress, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 200, 260, -1));
 
-        txtMobileNo.setFont(new java.awt.Font("Bernard MT Condensed", 0, 14)); // NOI18N
-        getContentPane().add(txtMobileNo, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 70, 260, -1));
+        txtMobileNo.setFont(new java.awt.Font("Bernard MT Condensed", 0, 16)); // NOI18N
+        getContentPane().add(txtMobileNo, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 80, 260, -1));
 
-        txtSalary.setFont(new java.awt.Font("Bernard MT Condensed", 0, 14)); // NOI18N
-        getContentPane().add(txtSalary, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 100, 120, -1));
+        txtSalary.setFont(new java.awt.Font("Bernard MT Condensed", 0, 16)); // NOI18N
+        getContentPane().add(txtSalary, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 120, 120, -1));
 
-        txtDateHired.setFont(new java.awt.Font("Bernard MT Condensed", 0, 14)); // NOI18N
-        getContentPane().add(txtDateHired, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 130, 260, -1));
+        txtDateHired.setFont(new java.awt.Font("Bernard MT Condensed", 0, 16)); // NOI18N
+        getContentPane().add(txtDateHired, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 160, 260, -1));
 
-        comboStatus.setFont(new java.awt.Font("Bernard MT Condensed", 0, 14)); // NOI18N
+        comboStatus.setFont(new java.awt.Font("Bernard MT Condensed", 0, 16)); // NOI18N
         comboStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Full-Time", "Part-Time", "Inactive" }));
         comboStatus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboStatusActionPerformed(evt);
             }
         });
-        getContentPane().add(comboStatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 160, 120, -1));
+        getContentPane().add(comboStatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 200, 120, 30));
 
-        lblStatus.setFont(new java.awt.Font("Bernard MT Condensed", 0, 14)); // NOI18N
+        lblStatus.setFont(new java.awt.Font("Bernard MT Condensed", 0, 16)); // NOI18N
         lblStatus.setForeground(new java.awt.Color(255, 255, 255));
         lblStatus.setText("Status:");
-        getContentPane().add(lblStatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 160, 50, 20));
+        getContentPane().add(lblStatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 200, 50, 30));
 
-        lblDateHired.setFont(new java.awt.Font("Bernard MT Condensed", 0, 14)); // NOI18N
+        lblDateHired.setFont(new java.awt.Font("Bernard MT Condensed", 0, 16)); // NOI18N
         lblDateHired.setForeground(new java.awt.Color(255, 255, 255));
         lblDateHired.setText("Date Hired:");
-        getContentPane().add(lblDateHired, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 130, 90, -1));
+        getContentPane().add(lblDateHired, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 160, 100, 30));
 
-        lblSalary.setFont(new java.awt.Font("Bernard MT Condensed", 0, 14)); // NOI18N
+        lblSalary.setFont(new java.awt.Font("Bernard MT Condensed", 0, 16)); // NOI18N
         lblSalary.setForeground(new java.awt.Color(255, 255, 255));
         lblSalary.setText("Monthly Salary:");
-        getContentPane().add(lblSalary, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 100, -1, -1));
+        getContentPane().add(lblSalary, new org.netbeans.lib.awtextra.AbsoluteConstraints(545, 120, 100, 30));
 
-        lblMobileNo.setFont(new java.awt.Font("Bernard MT Condensed", 0, 14)); // NOI18N
+        lblMobileNo.setFont(new java.awt.Font("Bernard MT Condensed", 0, 16)); // NOI18N
         lblMobileNo.setForeground(new java.awt.Color(255, 255, 255));
         lblMobileNo.setText("Mobile No:");
-        getContentPane().add(lblMobileNo, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 70, -1, -1));
+        getContentPane().add(lblMobileNo, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 80, -1, -1));
 
-        lblAddress.setFont(new java.awt.Font("Bernard MT Condensed", 0, 14)); // NOI18N
+        lblAddress.setFont(new java.awt.Font("Bernard MT Condensed", 0, 16)); // NOI18N
         lblAddress.setForeground(new java.awt.Color(255, 255, 255));
         lblAddress.setText("Address:");
-        getContentPane().add(lblAddress, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 160, -1, -1));
+        getContentPane().add(lblAddress, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 200, -1, -1));
 
-        lblLastName.setFont(new java.awt.Font("Bernard MT Condensed", 0, 14)); // NOI18N
+        lblLastName.setFont(new java.awt.Font("Bernard MT Condensed", 0, 16)); // NOI18N
         lblLastName.setForeground(new java.awt.Color(255, 255, 255));
         lblLastName.setText("Last Name:");
-        getContentPane().add(lblLastName, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 130, -1, -1));
+        getContentPane().add(lblLastName, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 160, -1, -1));
 
-        lblFirstName.setFont(new java.awt.Font("Bernard MT Condensed", 0, 14)); // NOI18N
+        lblFirstName.setFont(new java.awt.Font("Bernard MT Condensed", 0, 16)); // NOI18N
         lblFirstName.setForeground(new java.awt.Color(255, 255, 255));
         lblFirstName.setText("First Name:");
-        getContentPane().add(lblFirstName, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, -1, -1));
+        getContentPane().add(lblFirstName, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 120, -1, -1));
 
-        lblEmployeeCode.setFont(new java.awt.Font("Bernard MT Condensed", 0, 14)); // NOI18N
+        lblEmployeeCode.setFont(new java.awt.Font("Bernard MT Condensed", 0, 16)); // NOI18N
         lblEmployeeCode.setForeground(new java.awt.Color(255, 255, 255));
-        lblEmployeeCode.setText("Employee Code:");
-        getContentPane().add(lblEmployeeCode, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, -1, -1));
+        lblEmployeeCode.setText("Employee ID:");
+        getContentPane().add(lblEmployeeCode, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 80, 90, -1));
 
-        tblODetails.setFont(new java.awt.Font("Bernard MT Condensed", 0, 14)); // NOI18N
-        tblODetails.setModel(new javax.swing.table.DefaultTableModel(
+        tblDetails.setFont(new java.awt.Font("Berlin Sans FB", 0, 14)); // NOI18N
+        tblDetails.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
-                "Food Code", "Food Name", "Unit Price", "Quantity", "Total Price"
+                "Employee ID", "First Name", "Last Name", "Address", "Mobile No", "Salary", "Date Hired", "Status"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, true
+                false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(tblODetails);
+        jScrollPane2.setViewportView(tblDetails);
 
-        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 380, 930, 270));
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 380, 950, 270));
 
         EmployeeRegistration.setFont(new java.awt.Font("Bernard MT Condensed", 0, 28)); // NOI18N
         EmployeeRegistration.setForeground(new java.awt.Color(240, 240, 240));
@@ -245,11 +263,11 @@ public class EmployeeRegistry extends javax.swing.JFrame {
 
         BlackStrap.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/black screen.jpg"))); // NOI18N
         BlackStrap.setText("jLabel2");
-        getContentPane().add(BlackStrap, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 930, 50));
+        getContentPane().add(BlackStrap, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 970, 50));
 
         GreyBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/brown.jpg"))); // NOI18N
         GreyBackground.setText("jLabel1");
-        getContentPane().add(GreyBackground, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 930, 650));
+        getContentPane().add(GreyBackground, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 970, 690));
     }// </editor-fold>//GEN-END:initComponents
 
     private void comboStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboStatusActionPerformed
@@ -265,7 +283,10 @@ public class EmployeeRegistry extends javax.swing.JFrame {
     }//GEN-LAST:event_btAddActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        // TODO add your handling code here:
+        AdminMenu admenu = new AdminMenu();
+        admenu.setVisible(true);
+        admenu.setLocationRelativeTo(null);
+        this.dispose();
     }//GEN-LAST:event_btnBackActionPerformed
 
     /**
@@ -326,7 +347,7 @@ public class EmployeeRegistry extends javax.swing.JFrame {
     private javax.swing.JLabel lblMobileNo;
     private javax.swing.JLabel lblSalary;
     private javax.swing.JLabel lblStatus;
-    private javax.swing.JTable tblODetails;
+    private javax.swing.JTable tblDetails;
     private javax.swing.JTextField txtAddress;
     private javax.swing.JTextField txtDateHired;
     private javax.swing.JTextField txtEmpCode;

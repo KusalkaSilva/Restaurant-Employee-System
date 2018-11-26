@@ -251,16 +251,16 @@ public class AdminValidate extends javax.swing.JFrame {
             PreparedStatement ps1 = Database.con.prepareStatement("INSERT INTO login(UserName, Password, UserType) VALUES(?,?,?)");
             ps1.setString(1,SignUp.txtsUserName.getText());
             ps1.setString(2,SignUp.txtsPassword.getText());
-            ps1.setString(3,"Administrator");
+            ps1.setString(3,SignUp.comboUserType.getSelectedItem().toString());
             
             
             ps1.executeUpdate();
             
             JOptionPane.showMessageDialog(null, "Sign Up Successful");
             
-            AdminMenu admenu = new AdminMenu();
-            admenu.setVisible(true);
-            admenu.setLocationRelativeTo(null);
+            Registration reg = new Registration();
+            reg.setVisible(true);
+            reg.setLocationRelativeTo(null);
             this.dispose();
            
         }
